@@ -1,52 +1,356 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="sv">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Henkelt</title>
+<title>Henkelt – helt enkelt ett bättre Sverige</title>
+<meta name="description" content="Henkelt – helt enkelt ett bättre Sverige för dig och mig. Partiprogram, de tio viktigaste åtgärderna och femårsplaner mot Sverige 2050.">
 <style>
-  :root {
-    --bg: #f6f5f1;
-    --fg: #1d2330;
-    --muted: #5b6475;
-    --accent: #2a4d8f;
-    color-scheme: light;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #141821;
-      --fg: #eceff5;
-      --muted: #a3acbd;
-      --accent: #8fb0ee;
-      color-scheme: dark;
-    }
-  }
-  * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
-  body {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    display: grid;
-    place-items: center;
-    padding-inline: 1.5rem;
-  }
-  main { max-width: 36rem; text-align: center; }
-  h1 {
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    letter-spacing: 0.02em;
-    margin: 0 0 0.5rem;
-    text-wrap: balance;
-  }
-  p { color: var(--muted); font-size: 1.125rem; line-height: 1.6; margin: 0; }
-  .rule { width: 3rem; height: 3px; background: var(--accent); margin: 1.25rem auto; border-radius: 2px; }
+:root{color-scheme:light dark;
+--bg:light-dark(#f7f5f0,#121417);--card:light-dark(#ffffff,#1b1e22);--ink:light-dark(#1b1f24,#ece9e2);--muted:light-dark(#5b6168,#a3a8ae);
+--line:light-dark(#e2ded4,#2c3035);--brand:light-dark(#0f5c5a,#5cc8c2);--brand-ink:light-dark(#ffffff,#08201f);--accent:light-dark(#e9b949,#f2c95f);
+--soft:light-dark(#e6f1f0,#173332);--warn:light-dark(#8a4b00,#f5b25c);--warnbg:light-dark(#fff3e0,#33240f);--gov:light-dark(#5b2d8a,#c9a6f2);--govbg:light-dark(#f2ebfa,#291f36)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+a{color:var(--brand)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.02em;color:var(--brand);text-decoration:none}
+nav{display:flex;gap:18px;margin-left:auto;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:15px}
+nav a:hover,nav a:focus-visible{color:var(--ink)}
+.hero{padding:88px 0 72px;background:linear-gradient(160deg,var(--soft),transparent 70%)}
+.hero h1{font-size:clamp(40px,7vw,76px);line-height:1.02;margin:0 0 16px;letter-spacing:-.03em}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.hero p.lead{font-size:clamp(18px,2.4vw,22px);max-width:640px;color:var(--muted);margin:0 0 28px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 20px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--brand);font-size:16px;cursor:pointer;background:none;color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink)}
+section{padding:64px 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(28px,4vw,40px);margin:0 0 8px;letter-spacing:-.02em}
+section .sub{color:var(--muted);margin:0 0 32px;max-width:700px}
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.pillar{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.pillar h3{margin:0 0 6px;font-size:19px}
+.pillar p{margin:0;color:var(--muted);font-size:16px}
+.pillar .ic{width:40px;height:40px;border-radius:12px;background:var(--soft);color:var(--brand);display:grid;place-items:center;font-weight:800;margin-bottom:12px}
+.ten{display:grid;gap:12px;counter-reset:n}
+.ten details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0}
+.ten summary{list-style:none;cursor:pointer;padding:18px 20px;display:flex;gap:16px;align-items:center}
+.ten summary::-webkit-details-marker{display:none}
+.ten .num{flex:0 0 40px;height:40px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-weight:800}
+.ten .t{font-weight:700;font-size:18px;flex:1}
+.ten .plan{font-size:13px;color:var(--muted);white-space:nowrap}
+.ten summary::after{content:"+";font-size:24px;color:var(--muted);margin-left:8px}
+.ten details[open] summary::after{content:"–"}
+.ten .body{padding:0 20px 18px 76px;color:var(--ink)}
+.ten .body p{margin:0 0 8px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--brand)}
+.tag.u{background:var(--warnbg);color:var(--warn)}
+.tag.g{background:var(--govbg);color:var(--gov)}
+.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px;position:relative}
+.timeline button{all:unset;cursor:pointer;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 12px;text-align:center;transition:transform .15s}
+.timeline button:hover{transform:translateY(-2px)}
+.timeline button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.timeline button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.timeline .y{display:block;font-size:13px;opacity:.8}
+.timeline .n{display:block;font-weight:800;font-size:18px}
+.planbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.planbox h3{margin:0 0 4px;font-size:24px}
+.planbox .when{color:var(--muted);margin:0 0 14px}
+.planbox ul{margin:0;padding-left:20px}
+.planbox li{margin:4px 0}
+.progress{height:8px;border-radius:99px;background:var(--line);margin:18px 0 0;overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--accent));transition:width .3s}
+.tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.tools input[type=search]{flex:1 1 260px;padding:12px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+.tools label{font-size:15px;color:var(--muted);display:flex;gap:6px;align-items:center;cursor:pointer}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.chip{all:unset;cursor:pointer;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:14.5px}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip:focus-visible{outline:3px solid var(--accent)}
+.area{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-bottom:14px}
+.area h3{margin:0 0 10px;font-size:21px}
+.area ul{margin:0;padding-left:20px}
+.area li{margin:6px 0}
+.area li .tags{display:inline-flex;margin-left:6px;vertical-align:middle}
+mark{background:var(--accent);color:#1b1f24;border-radius:3px;padding:0 2px}
+.count{color:var(--muted);font-size:15px;margin:-8px 0 16px}
+.empty{color:var(--muted);padding:20px;text-align:center}
+.about{max-width:760px}
+footer{padding:40px 0 60px;color:var(--muted);font-size:15px;border-top:1px solid var(--line)}
+@media (max-width:720px){
+ nav{display:none}
+ .timeline{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+ .timeline button{padding:10px 4px}
+ .timeline .n{font-size:15px}.timeline .y{font-size:11px}
+ .ten .body{padding-left:20px}
+ .ten .plan{display:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.timeline button,.progress i{transition:none}}
 </style>
 </head>
 <body>
-<main>
-  <h1>Henkelt</h1>
-  <div class="rule"></div>
-  <p>Webbplatsen är under uppbyggnad. Välkommen tillbaka snart.</p>
+<header class="top"><div class="wrap">
+ <a class="logo" href="#start">Hen<span>kelt</span></a>
+ <nav aria-label="Huvudmeny">
+  <a href="#ide">Vår idé</a><a href="#tio">Tio åtgärder</a><a href="#planer">Femårsplaner</a><a href="#program">Programmet</a><a href="#om">Om programmet</a>
+ </nav>
+</div></header>
+
+<main id="start">
+<div class="hero"><div class="wrap">
+ <h1>Helt enkelt ett <em>bättre Sverige</em><br>för dig och mig.</h1>
+ <p class="lead">En stark stat för skola, vård, omsorg och infrastruktur. Fri rörlighet för företag och arbetsmarknad. Ett Sverige som använder hela landet, från Ystad till Kiruna.</p>
+ <div class="btns"><a class="btn primary" href="#tio">Våra tio viktigaste åtgärder</a><a class="btn" href="#planer">Vägen till 2050</a></div>
+</div></div>
+
+<section id="ide"><div class="wrap">
+ <h2>Vår idé</h2>
+ <p class="sub">Allt kan inte göras på en mandatperiod. Därför lägger vi fram femårsplaner som visar vad som ska vara genomfört vart femte år, fram till ett nytt Sverige 2050. Vår politik bygger på det forskningen visar fungerar, och där förslag saknar underlag utreder vi innan vi beslutar.</p>
+ <div class="pillars">
+  <div class="pillar"><div class="ic" aria-hidden="true">1</div><h3>Staten tar ansvar</h3><p>Skola, vård, omsorg och infrastruktur är gemensamma åtaganden med nationell styrning och kvalitet.</p></div>
+  <div class="pillar"><div class="ic" aria-hidden="true">2</div><h3>Rörlighet som skapar jobb</h3><p>En arbetsmarknad med samma golv för alla, men med större rörlighet och goda villkor för företag.</p></div>
+  <div class="pillar"><div class="ic" aria-hidden="true">3</div><h3>Hela landet</h3><p>Makten flyttar till Östersund senast 2050. Myndigheter, bostäder och kommunikationer byggs ut i hela Sverige.</p></div>
+  <div class="pillar"><div class="ic" aria-hidden="true">4</div><h3>Evidens före åsikter</h3><p>Vi följer forskningen där den ger svar, gör öppna värdeval där den inte gör det och utreder där underlag saknas.</p></div>
+ </div>
+</div></section>
+
+<section id="tio"><div class="wrap">
+ <h2>De tio viktigaste åtgärderna</h2>
+ <p class="sub">De sex första har starkast stöd i forskningen och genomförs i den första femårsplanen. Klicka på en åtgärd för att läsa mer.</p>
+ <div class="ten" id="ten"></div>
+</div></section>
+
+<section id="planer"><div class="wrap">
+ <h2>Femårsplaner mot Sverige 2050</h2>
+ <p class="sub">Varje plan har mål som ska vara nådda när den löper ut, så att du kan följa upp vad vi har levererat. Välj en plan.</p>
+ <div class="timeline" role="tablist" aria-label="Femårsplaner" id="tl"></div>
+ <div class="planbox" role="tabpanel" id="planbox" aria-live="polite"></div>
+</div></section>
+
+<section id="program"><div class="wrap">
+ <h2>Hela programmet</h2>
+ <p class="sub">Sök bland alla förslag eller filtrera på område. <span class="tag u">Utredning krävs</span> betyder att förslaget utreds innan beslut. <span class="tag g">Grundlagsändring</span> betyder två riksdagsbeslut med ett val emellan.</p>
+ <div class="tools">
+  <input type="search" id="q" placeholder="Sök i programmet, t.ex. kärnkraft, skola, Östersund" aria-label="Sök i programmet">
+  <label><input type="checkbox" id="onlyU"> Visa bara förslag som ska utredas</label>
+ </div>
+ <div class="chips" id="chips" role="group" aria-label="Filtrera på område"></div>
+ <p class="count" id="count" aria-live="polite"></p>
+ <div id="areas"></div>
+</div></section>
+
+<section id="om"><div class="wrap about">
+ <h2>Om programmet</h2>
+ <p>Vi har gått igenom riksdagspartiernas linjer i riksdagens 15 utskottsområden och prövat dem mot forskning och myndigheternas utvärderingar. Där forskningen ger ett tydligt svar har vi följt den. Där den inte kan avgöra har vi gjort ett öppet värdeval, och där underlag saknas tillsätter vi en utredning innan beslut.</p>
+ <p>Alla reformer ska vara finansierade och hålla sig inom balansmålet och skuldankaret på 35 procent av BNP. Bara försvarets upprustning får tillfälligt lånefinansieras. Varje femårsplan inleds först när dess finansiering är beslutad.</p>
+</div></section>
 </main>
+
+<footer><div class="wrap">Henkelt – helt enkelt ett bättre Sverige för dig och mig. · Partiprogram, november 2026.</div></footer>
+
+<script>
+const TEN=[
+["Språkförskola och fler barn i förskolan","Plan 1","Obligatorisk språkförskola för barn med svaga svenskkunskaper och uppsökande verksamhet. IFAU konstaterar att förskola av hög kvalitet ger bättre skolresultat på kort och lång sikt, mest för barn med svaga förutsättningar.",[]],
+["Arbetsmarknadsutbildning mot bristyrken","Plan 1","Antalet platser flerdubblas. IFAU:s uppföljning visar att de långsiktiga effekterna på sysselsättning och inkomst har varit positiva.",[]],
+["Polis där brotten sker","Plan 1","Fler poliser i fotpatrull, koncentrerade till de platser där brotten samlas, och en svensk maffialag. En systematisk översikt av 78 tester visar att fokuserad polisnärvaro minskar brott utan att de bara flyttar.",[]],
+["El för industrin och försvaret","Plan 1–3","Staten finansierar upp till 5 000 MW ny kärnkraft, tillstånden får fasta tidsgränser och vi driver en reform av elområdena med ett inhemskt område och ett exportområde. Elområdesreformen kräver utredning och en EU-process.",["u"]],
+["Försvaret till 3,5 procent av BNP 2032","Plan 1–2","Minst 12 000 värnpliktiga per år 2030, utbyggd civilplikt, drönarvärn och en nordisk-baltisk luftvärnssköld.",[]],
+["Grön industri och innovation","Plan 1–2","De gröna kreditgarantierna återinförs, en statlig investeringsbank inrättas och Sverige ska 2035 ha flest ingenjörer per capita i EU. Statskontoret har bedömt kreditgarantierna som kostnadseffektiva.",[]],
+["Skolan som statens ansvar","Plan 1–3","Vinstförbud och totalförbud mot värdeöverföringar direkt, därefter utfasning av alla friskolor med en plan för elever och lokaler. Högst 12 elever per lärare i de yngre årskurserna.",["u"]],
+["Vården under nationellt ansvar","Plan 1–3","Vårdgarantin skärps till 30 dagar, staten tar huvudansvaret för styrning och kvalitet och inga försäkringspatienter går före.",["u"]],
+["Makten flyttar till Norrland","Plan 1–5","Riksdag och regering flyttar till Östersund senast 2050, efter en ordentlig utbyggnad av staden. Myndigheter flyttar ut och landsbygden får bostäder och gratis kollektivtrafik.",["u","g"]],
+["En arbetsmarknad med samma golv för alla","Plan 2–3","Lagstiftad arbetstid på 35 timmar, lagstadgad minimilön och obligatorisk a-kassa betald av arbetsgivarna, kombinerat med större rörlighet.",["u"]]
+];
+const PLANS=[
+["Plan 1","2027–2031","Grunden",["Språkförskola och fler arbetsmarknadsutbildningar","Fler poliser och en svensk maffialag","Vinstförbud i skolan och skärpt vårdgaranti","Gröna kreditgarantier och en statlig investeringsbank","Alla 20 utredningar tillsätts","Första riksdagsbeslutet om grundlagsändringar för Östersund och regionerna"]],
+["Plan 2","2032–2036","Systemskiftet börjar",["Försvaret når 3,5 procent av BNP","Grundlagsändringarna beslutas en andra gång","Ny arbetsmarknadsmodell med lagstiftad arbetstid, minimilön och obligatorisk a-kassa","Staten tar huvudansvaret för vården","Utfasningen av friskolor inleds","Utbyggnaden av Östersund startar"]],
+["Plan 3","2037–2041","Ett land i balans",["Regionerna ersätter kommunerna","Friskolorna är utfasade","Ny kärnkraft och den nya elområdesmodellen är på plats","Gratis kollektivtrafik på landsbygden"]],
+["Plan 4","2042–2046","Norrland växer",["Myndigheter och departement flyttar etappvis till Östersund och andra orter i norr","Bostäder och kommunikationer byggs ut i hela landet"]],
+["Plan 5","2047–2050","Sverige 2050",["Riksdag och regering är på plats i Östersund","Makten och det ekonomiska centrumet är åtskilda","Hela landet används"]]
+];
+// [område, [[text, flaggor]]] ; u = utredning krävs, g = grundlagsändring
+const AREAS=[
+["Försvar",[
+["Försvaret ska vara 3,5 procent av BNP senast 2032, med tillfällig lånefinansiering, kostnadskontroll och bred förankring."],
+["Minst 12 000 värnpliktiga per år 2030 och på sikt 20 000. Civilplikten byggs ut till fler sektorer."],
+["Stridsflyg, ubåtar, långräckviddig bekämpning och drönare prioriteras. Ett svenskt drönarvärn inrättas."],
+["Staten kan bli delägare i delar av försvarsindustrin när det stärker försvaret."],
+["Fördjupat försvarssamarbete i EU, ett stärkt ansvar i Nato och en nordisk-baltisk luftvärnssköld."],
+["Stödet till Ukraina är Sveriges viktigaste utrikespolitiska prioritering, även efter en fred."],
+["Näringslivet engageras i totalförsvaret, beredskapslagren ökar och kommunerna får ett nationellt cyberskydd."],
+["Försvarsprojekt ska kunna godkännas snabbare."],
+["Försvarsmakten tar fram var och hur nya regementen ska inrättas.","u"],
+["Sjukvårdens krigsberedskap utreds grundligt: förväntningar, förutsättningar och läge.","u"]]],
+["Utbildning",[
+["Vinstförbud i skola och förskola och totalförbud mot värdeöverföringar."],
+["Alla friskolor fasas ut, med en plan för elever och lokaler.","u"],
+["Kommunala skolor erbjuder olika inriktningar där underlaget finns. Till dess friskolorna är utfasade gäller ett gemensamt kösystem."],
+["Högst 12 elever per lärare i de yngre årskurserna och mindre grupper för elever med stora behov."],
+["Obligatorisk språkförskola för barn som behöver den och svenskkrav på all personal."],
+["Alla lågstadiebarn som behöver det får rätt till fritids, och barngrupperna i förskolan blir mindre."],
+["Daglig läsning i hela grundskolan, skärmarna fasas ut i låg- och mellanstadiet och läraren är klassrummets chef med ordningsbetyg."],
+["Kameraövervakning får användas i skolans gemensamma utrymmen där det behövs."],
+["Statlig granskning av läromedel, starkare matematik och privatekonomi som eget ämne."],
+["Fler behöriga lärare, sanktioner mot skolor med för få, fler yrkesutbildningar och fler ingenjörsplatser."],
+["Fribeloppet för studiemedel tas bort under sommaren."]]],
+["Vård och omsorg",[
+["Vårdgarantin i specialistvården skärps till 30 dagar och regionen betalar för vård hos annan vårdgivare om den bryts."],
+["Staten tar huvudansvaret för styrning och kvalitet i vården, barn- och ungdomspsykiatrin och HVB-vården. Driftsformen avgörs av utredningen.","u"],
+["Nationell inriktning för arbetstid och ob-ersättning i vården. Även företagshälsovårdens roll ses över.","u"],
+["Patienter med privat vårdförsäkring får inte gå före hos offentligt finansierade vårdgivare."],
+["De sjukaste får en fast läkare. 1177 får en nationell digital läkartjänst och patientinformationen delas i hela vården."],
+["Statsbidragen till välfärden räknas upp med inflationen."],
+["Äldreomsorgen får fler undersköterskor, en värdighetsgaranti och mer medicinsk kompetens."],
+["Obligatorisk registerkontroll för personal, nationellt vaccinprogram för äldre och en kvinnohälsokommission."],
+["Staten blir huvudman för den personliga assistansen."],
+["Avgiftsfri tandvård gäller till och med 19 år, med förstärkt stöd för personer över 67 år."],
+["En effektiv åldersgräns på 15 år för sociala medier."],
+["Åldersgränsen på Systembolaget sänks till 18 år för öl och vin, om inte myndighetsåldern höjs till 20 år.","u"]]],
+["Trafik och infrastruktur",[
+["Underhållet av väg och järnväg ska vara statligt eller ha ett tak för vinstuttag på 1,5 procent av kostnaden.","u"],
+["Staten tar större ansvar för stora investeringar via projektbolag, med privat kapital där det hör hemma. Planeringen får fasta tidsgränser."],
+["Kollektivtrafiken blir avgiftsfri på landsbygden.","u"],
+["Nattågen och paketutlämningen ska finnas i hela landet."],
+["Vägnätet prioriteras efter trafik, alternativa vägar och nationell säkerhet."],
+["Laddinfrastrukturen byggs ut och den tunga trafiken elektrifieras. Ingen elbilspremie."],
+["En inhemsk biodrivmedelsindustri byggs upp med långa upphandlingskontrakt."],
+["De regionala flygplatserna utvärderas. Mindre orter ska ta större plats, och då är kommunikationerna avgörande.","u"]]],
+["Finans och ekonomi",[
+["Alla reformer ska vara finansierade och genomföras i ordning."],
+["Ett program mot slöseri, med undantag för försvar, rättsväsende och infrastruktur."],
+["En statlig investeringsbank och statliga byggkrediter."],
+["SBAB får ett vinsttak på 2 procent och delar ut överskottet till kunderna.","u"],
+["Myndigheter och statens servicekontor ska finnas i hela landet."],
+["Effektivare upphandling, nationell svartlistning och europeisk teknik vid säkerhetskänslig IT."],
+["Mål: högst levnadsstandard i EU och 50 procent högre reallöner inom tio år."]]],
+["Skatt",[
+["Skattesänkningar riktas till låg- och medelinkomsttagare och arbetande föräldrar. Marginalskatten för höga inkomster och bolagsskatten sänks inte."],
+["Ett jobbat-avdrag ger lägre skatt på arbetsrelaterad pension."],
+["De första 500 000 kronorna på ISK blir skattefria."],
+["Ingen fastighetsskatt, ingen bolåneskatt och ingen bankskatt."],
+["Drivmedelsskatten sänks inte men ses över, med målet att minska fossil förbrukning."],
+["Elskatten för stora värmepumpar i fjärrvärmen sänks till EU:s miniminivå."],
+["ROT-avdraget för energiåtgärder tas bort."],
+["Arbetsgivaravgiften ska synas på lönespecifikationen och deklarationen."],
+["Nollmoms på ekologiska livsmedel, i en form som EU-rätten tillåter.","u"]]],
+["Näringsliv och energi",[
+["En bred energiöverenskommelse och statlig finansiering av upp till 5 000 MW ny kärnkraft."],
+["Snabbare och rättssäkra tillstånd för vindkraft, med kompensation till närboende."],
+["Elnätet förstatligas eller får ett vinsttak på 2 procent.","u"],
+["Två elområden: ett för Sverige och ett för export.","u"],
+["AI och grön teknik pekas ut som strategiska områden. Bättre kapital och personaloptioner för växande företag."],
+["De gröna kreditgarantierna återinförs och Industriklivet, Klimatklivet och Vinnova stärks."],
+["Staten står för karensavdraget i företag med högst 20 anställda.","u"],
+["Fler frihandelsavtal och ett aktivare exportfrämjande för små och medelstora företag."],
+["Inget utökat korttidsarbete och lättare att säga upp av personliga skäl."],
+["Kulturella frizoner med friare regler för uteserveringar, torghandel och nöjesliv."]]],
+["Arbetsmarknad",[
+["Större rörlighet på arbetsmarknaden är vägen in för unga. Inga särskilda ungdomsinsatser."],
+["Arbetsmarknadsutbildningarna flerdubblas mot bristyrken."],
+["Stöd kräver deltagande i insatser. Målet är att halvera antalet med försörjningsstöd."],
+["En statlig instans bedömer arbetsförmåga. Arbetsförmedlingen drivs utan privata aktörer."],
+["10 000 fler arbetsplatskontroller per år och högst två led av underentreprenörer i riskbranscher."],
+["Kvalificerad arbetskraft från andra länder ska kunna komma hit, och utländska utbildningar valideras snabbare."],
+["Heltid på 35 timmar i veckan blir norm genom lag. Övertid räknas först över 40 timmar.","u"],
+["Staten lagstiftar om arbetstid och en minimilön som gäller alla. Facken behåller rätten att förhandla ovanpå golvet.","u"],
+["Nolltolerans mot dödsolyckor i arbetslivet."],
+["Höjda lönebidrag och skarpare arbete mot diskriminering, också åldersdiskriminering av både unga och äldre."],
+["Fler får omställningsstudiestöd."],
+["Sverige ska gå före inom AI och trygga försörjningen för den som förlorar jobbet. Företag som ersätter merparten av personalen med AI kan få högre vinstskatt.","u"]]],
+["Socialförsäkring och migration",[
+["Obligatorisk a-kassa, betald av arbetsgivarna. Ersättningen baseras på inkomst och trappas ned över tid.","u"],
+["Sjukförsäkringen stärks med bättre rehabilitering och tydligare övergångar."],
+["En behovsprövad övergångs- och arbetarpension införs. Pensionsavgiften ses över."],
+["Barn- och studiebidragen förstärks och trappas av för hushåll med höga inkomster.","u"],
+["Fler föräldradagar som kan tas ut samtidigt: 120 i stället för 60."],
+["Inget bidragstak."],
+["En strikt migrationspolitik med asylinvandring på EU:s miniminivå, fler verkställda utvisningar av brottsdömda och skärpta regler för anhöriginvandring."],
+["Välintegrerade unga utvisas inte."],
+["Hårdare krav för medborgarskap, ett Sverigekontrakt, reformerad SFI och tolk som huvudregel i tre år."]]],
+["Rättsväsende",[
+["Polisen växer med fler poliser i fotpatrull där brotten sker, i utsatta områden och på landsbygden."],
+["En svensk maffialag, förverkade brottsvinster till brottsoffer och en myndighet mot organiserad brottslighet."],
+["Skola och socialtjänst fångar upp unga på väg in i kriminalitet. Ingen sänkt straffbarhetsålder."],
+["Hårdare straff för den som rekryterar barn, avskaffad mängdrabatt och nya brott för femicid och synnerligen grov våldtäkt."],
+["Preventiva tvångsmedel mot våldsamma män, ett förövarregister och en brottsofferlag."],
+["Ett centralt pedofilregister, obligatoriska bakgrundskontroller och kemisk kastrering som villkor vid villkorlig frigivning."],
+["Aktivklubbar ska kunna förbjudas och bidrag till extremism stoppas."],
+["Nolltolerans mot brott mot företag och en kraftigt utbyggd kriminalvård."]]],
+["Bostad",[
+["Inget statligt investeringsstöd till hyresrätter. I stället flyttas myndigheter och utbildning ut för att minska trycket på storstäderna."],
+["Inga nya bostadsbyggen i Stockholm när flytten av riksdag och regering har kommit igång.","u"],
+["Hyrorna sätts som i dag efter bruksvärde."],
+["Vi bygger så mycket att vinsterna på bostadsmarknaden pressas ned. Alla får fortsatt sälja sin bostad."],
+["Regionen får ett tillfälligt mandat att ta hand om fastigheter som förfaller eller saknar huvudman och avgör om de ska rivas, renoveras eller ersättas.","u"],
+["Vart femte hus i miljonprogrammen rivs för grönområden, lekplatser och fritidsverksamhet.","u"],
+["Målet är att två normallöner ska räcka till ett eget hus."],
+["Strandskyddet skiljer sig mellan olika delar av landet, med tydlig rätt till fri passage."],
+["SBAB får i uppdrag att utreda hur kontanter säkras utan att belasta företagen."],
+["Lägre veterinärkostnader, tillåtet altruistiskt surrogatmoderskap och bakgrundskontroller i dejtingappar."]]],
+["Miljö och jordbruk",[
+["Storskalig trålning i Östersjön stoppas och småskaligt fiske stärks."],
+["Mer jakt på skarv, gråsäl och vildsvin. Vargstammen hålls inom riksdagens intervall."],
+["PFAS förbjuds i konsumentprodukter och ett nytt brott, synnerligen grovt miljöbrott, införs."],
+["Skogspolitiken beslutas så långt som möjligt i Sverige."],
+["Livsmedelsproduktionen ökar för beredskapen och lantbruket får mindre byråkrati och mer biogas."],
+["Allemansrätten värnas, fler nationalparker inrättas och en nationell vattenstrategi tas fram."],
+["En grön stadsmiljard för grönare städer."]]],
+["Kultur",[
+["Public service grundlagsskyddas och stärks i totalförsvaret.","g"],
+["Folkbildningen och folkhögskolorna värnas."],
+["En kulturgaranti ger varje barn en kulturupplevelse per termin, och kulturen på landsbygden tryggas."],
+["Bättre regler för privat kulturfinansiering och en kulturfastighetsfond.","u"],
+["Streamingtjänster beskattas som allt annat."],
+["Idrottsrörelsen stärks, medie- och AI-kunskapen ökar och trossamfund som upprätthåller hederskultur får sanktioner."]]],
+["Utrikes",[
+["Biståndet går till Ukraina och närområdet, med bred förankring i riksdagen. I övrigt ges bistånd vid katastrofer och oförutsedda händelser."],
+["Biståndet kopplas till handel och till arbetet mot irreguljär migration."],
+["Ukraina ska bli medlem i EU. EU-länder som inte längre är demokratier ska i yttersta fall kunna uteslutas."],
+["Sverige värnar den regelbaserade världsordningen i Nato, EU, FN, OSSE och Europarådet."],
+["Sverige ska internationellt driva att landfördelningen mellan Israel och Palestina går tillbaka till FN:s delningsresolution från 1947, och att palestinier i Europa och USA ska kunna återvända."],
+["All politik ska vara jämställd, i stället för en särskild feministisk utrikespolitik."],
+["Slutmålet är total kärnvapennedrustning, men i dagens läge prioriteras försvaret."],
+["Kvinnor, flickor och hbtqi-personer prioriteras bland kvotflyktingarna."]]],
+["Konstitution och styrning",[
+["Domstolarnas oberoende, rätten till domstolsprövning och rätten till abort skyddas i grundlagen. Grundlagsändringar kräver kvalificerad majoritet.","g"],
+["Riksdag och regering flyttar till Östersund senast 2050. Östersund byggs först ut med bostäder, kommunikationer och lokaler, och flytten ska ge ett mer aktivt Norrland.","ug"],
+["Kommunerna ersätts av starka regioner med tjänstemän på regionens orter.","ug"]]]
+];
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const tagHTML=f=>(f||"").split("").map(x=>x==="u"?'<span class="tag u">Utredning krävs</span>':x==="g"?'<span class="tag g">Grundlagsändring</span>':"").join("");
+
+$("ten").innerHTML=TEN.map((t,i)=>`<details><summary><span class="num">${i+1}</span><span class="t">${esc(t[0])}</span><span class="plan">${t[1]}</span></summary><div class="body"><p>${esc(t[2])}</p><div class="tags"><span class="tag">${t[1]}</span>${tagHTML(t[3].join(""))}</div></div></details>`).join("");
+
+let cur=0;
+function showPlan(i){cur=i;
+ [...$("tl").children].forEach((b,j)=>{b.setAttribute("aria-selected",j===i);b.tabIndex=j===i?0:-1});
+ const p=PLANS[i];
+ $("planbox").innerHTML=`<h3>${p[0]}: ${p[2]}</h3><p class="when">${p[1]}</p><ul>${p[3].map(x=>`<li>${esc(x)}</li>`).join("")}</ul><div class="progress" aria-hidden="true"><i style="width:${(i+1)*20}%"></i></div>`;}
+$("tl").innerHTML=PLANS.map((p,i)=>`<button role="tab" id="tab${i}" aria-controls="planbox"><span class="n">${p[0]}</span><span class="y">${p[1]}</span></button>`).join("");
+[...$("tl").children].forEach((b,i)=>{b.addEventListener("click",()=>showPlan(i));
+ b.addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){const n=(cur+(e.key==="ArrowRight"?1:4))%5;showPlan(n);$("tl").children[n].focus();e.preventDefault()}})});
+showPlan(0);
+
+let area="Alla";
+$("chips").innerHTML=["Alla",...AREAS.map(a=>a[0])].map(a=>`<button class="chip" aria-pressed="${a==="Alla"}" data-a="${esc(a)}">${esc(a)}</button>`).join("");
+$("chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;area=b.dataset.a;[...$("chips").children].forEach(c=>c.setAttribute("aria-pressed",c===b));render()});
+function hl(text,q){const s=esc(text);if(!q)return s;const re=new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi");return s.replace(re,"<mark>$1</mark>")}
+function render(){
+ const q=$("q").value.trim(),onlyU=$("onlyU").checked,ql=q.toLowerCase();let n=0;
+ const html=AREAS.filter(a=>area==="Alla"||a[0]===area).map(a=>{
+  const items=a[1].filter(it=>(!onlyU||(it[1]||"").includes("u"))&&(!ql||it[0].toLowerCase().includes(ql)||a[0].toLowerCase().includes(ql)));
+  n+=items.length;if(!items.length)return"";
+  return `<div class="area"><h3>${esc(a[0])}</h3><ul>${items.map(it=>`<li>${hl(it[0],q)}${it[1]?`<span class="tags">${tagHTML(it[1])}</span>`:""}</li>`).join("")}</ul></div>`}).join("");
+ $("areas").innerHTML=html||'<p class="empty">Inga förslag matchar din sökning.</p>';
+ $("count").textContent=n+(n===1?" förslag":" förslag")+" visas";}
+$("q").addEventListener("input",render);$("onlyU").addEventListener("change",render);
+render();
+</script>
 </body>
 </html>
