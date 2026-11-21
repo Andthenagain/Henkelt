@@ -125,6 +125,9 @@ footer{padding:40px 0 60px;color:var(--muted);font-size:15px;border-top:1px soli
 .regionbox .str{margin:0 0 4px;padding:10px 14px;border-radius:12px;background:color-mix(in srgb,var(--brand) 12%,var(--bg));font-weight:700;font-size:1.05rem}
 .regionbox .str span{display:block;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--brand)}
 .regionbox .str em{display:block;font-style:normal;font-weight:400;font-size:.92rem;margin-top:6px}
+.regionbox .allt{margin:14px 0 0;font-size:.92rem}
+.regionbox .allt a{color:var(--brand);font-weight:600;text-decoration:none}
+.regionbox .allt a:hover{text-decoration:underline}
 .regionbox .strnote{color:var(--muted);font-size:.85rem;margin:0 0 14px}
 .regionbox ul,.personabox ul{margin:0;padding:0;list-style:none}
 .regionbox li,.personabox li{padding:10px 0 10px 30px;border-top:1px solid var(--line);position:relative}
@@ -422,7 +425,20 @@ const AREAS=[
 ["Konstitution och styrning",[
 ["Domstolarnas oberoende, rätten till domstolsprövning och rätten till abort skyddas i grundlagen. Grundlagsändringar kräver kvalificerad majoritet.","g"],
 ["Riksdag och regering flyttar till Östersund senast 2050. Östersund byggs först ut med bostäder, kommunikationer och lokaler, och flytten ska ge ett mer aktivt Norrland.","ug"],
-["Kommunerna ersätts av starka regioner med tjänstemän på regionens orter.","ug"]]]
+["Kommunerna ersätts av starka regioner med tjänstemän på regionens orter.","ug"]]],
+["Befolkning och familj",[
+["Barnafödandet ska öka tydligt till 2050, så att Sverige kan växa utan att vara beroende av invandring. I dag föds 1,42 barn per kvinna, det lägsta som någonsin har mätts."],
+["Forskningen visar att utbyggd barnomsorg och ekonomiskt stöd till barnfamiljer ökar barnafödandet. Vi bygger vidare på mindre barngrupper, fritids för alla lågstadiebarn och fler dubbeldagar."],
+["Det ekonomiska stödet till barnfamiljer utformas så att det blir lättare att skaffa fler barn.","u"],
+["Fler bostäder för barnfamiljer i hela landet, särskilt utanför storstäderna, där barnafödandet redan är högst."],
+["Det ska vara enkelt för våra nordiska grannar och andra EU-medborgare att flytta hit. Vi löser alla svenska gränshinder mot de nordiska länderna under en mandatperiod."],
+["Den som blir svensk medborgare ska ha kunskap om det svenska samhället."]]],
+["Myndigheter i hela landet",[
+["Myndigheterna placeras där regionens styrka finns. Rymdstyrelsen hör till exempel hemma i Kiruna, nära rymdbasen."],
+["Myndigheterna flyttar tillräckligt långt bort, så att de anställda flyttar med i stället för att pendla."],
+["Vi flyttar vid naturliga tillfällen, till exempel när ett hyresavtal löper ut eller en myndighet omorganiseras."],
+["Det som hör till regeringen följer med till Östersund senast 2050. Finansmyndigheterna och nationalscenerna stannar i Stockholm."],
+["Varje fyraårsplan har en flyttvåg, och varje våg utvärderas innan nästa börjar."]]]
 ];
 const $=id=>document.getElementById(id);
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -503,23 +519,32 @@ const CULTURE={
 "Jämtland":"fjällkulturen och den sydsamiska kulturen",
 "Västerbotten":"samtidskonsten och träarkitekturen"};
 const LOCAL={
-"Norrbotten":"Norrbotniabanan byggs hela vägen till Luleå, och dubbelspåret Luleå–Boden kommer tillbaka i planen.",
-"Västerbotten":"Norrbotniabanan mellan Umeå och Skellefteå ska vara klar 2032, som planerat.",
-"Västernorrland":"Dubbelspår på Ostkustbanan hela vägen till Sundsvall och Härnösand.",
-"Gävleborg":"Dubbelspår på Ostkustbanan hela vägen mellan Gävle och Sundsvall.",
-"Halland":"Ny kärnkraft vid Ringhals.",
-"Östergötland":"Ostlänken hela vägen in till Linköping C och vidare mot Mjölby.",
-"Södermanland":"Ostlänken, med station vid Skavsta, ska vara klar 2035.",
-"Gotland":"Trygg vattenförsörjning och en robust elförbindelse till fastlandet.",
-"Kalmar":"E22 blir mötesfri väg hela vägen genom länet.",
-"Blekinge":"E22 blir motorväg genom hela Blekinge.",
-"Skåne":"E22 blir motorväg genom Skåne.",
-"Jönköping":"Den nya järnvägen genom Jönköping kommer tillbaka i planen."
+"Norrbotten":["Norrbotniabanan byggs hela vägen till Luleå, och dubbelspåret Luleå–Boden kommer tillbaka i planen.","Malmbanan byggs ut med längre bangårdar och nya mötesspår.","Kirunas nya sjukhus står klart 2030, som planerat.","Läkarutbildningen i Luleå byggs ut till 60 platser.","Norrlands dragonregemente i Arvidsjaur fortsätter att växa."],
+"Västerbotten":["Norrbotniabanan mellan Umeå och Skellefteå ska vara klar 2032, som planerat.","Den nya vårdbyggnaden vid Skellefteå sjukhus byggs färdigt."],
+"Västernorrland":["Dubbelspår på Ostkustbanan hela vägen till Sundsvall och Härnösand.","Västernorrlands regemente i Sollefteå byggs upp.","Läkarutbildningen i Sundsvall byggs ut till 60 platser."],
+"Jämtland":["Regementets verksamhet i Östersund byggs ut.","Läkarutbildningen i Östersund byggs ut till 60 platser."],
+"Gävleborg":["Dubbelspår på Ostkustbanan hela vägen mellan Gävle och Sundsvall, med början vid Gävle."],
+"Dalarna":["Dalregementet i Falun får sin nya garnison."],
+"Värmland":["Dubbelspår mellan Karlstad och Kil.","Bergslagens artilleriregemente i Kristinehamn byggs färdigt."],
+"Örebro":["Övningsfältet i Villingsberg blir en del av det nya artilleriregementet."],
+"Västmanland":["Det nya akutsjukhuset i Västerås står klart 2029."],
+"Uppsala":["Upplands flygflottilj i Uppsala fortsätter att byggas upp.","Natos nya stab och signalkompani i Enköping."],
+"Stockholm":["Tunnelbanan byggs färdigt."],
+"Södermanland":["Ostlänken, med station vid Skavsta, ska vara klar 2035.","Sjukhusen i Eskilstuna, Nyköping och Katrineholm moderniseras."],
+"Östergötland":["Ostlänken hela vägen in till Linköping C och vidare mot Mjölby."],
+"Jönköping":["Den nya järnvägen genom Jönköping kommer tillbaka i planen.","Riksväg 40 mellan Jönköping och Ulricehamn blir fyrfältsväg."],
+"Kronoberg":["Sydostlänken, en ny elektrifierad järnväg från Älmhult mot Blekinge."],
+"Kalmar":["E22 blir mötesfri väg hela vägen genom länet.","Kalmar C byggs om.","Gotlands nya elförbindelse utgår från Oskarshamn."],
+"Gotland":["Trygg vattenförsörjning och två nya elkablar till fastlandet, klara 2031.","Gotlands regemente fortsätter att byggas upp."],
+"Blekinge":["E22 blir motorväg genom hela Blekinge.","Sydostlänken ansluter till hamnen i Karlshamn.","Kortare restid med tåg mellan Karlskrona och Malmö.","Marinbasen i Karlskrona byggs ut."],
+"Skåne":["E22 blir motorväg genom Skåne.","Två nya spår mellan Hässleholm och Lund.","Ett nytt akutsjukhus i Helsingborg."],
+"Halland":["Ny kärnkraft vid Ringhals.","Halmstad C byggs om och hamnen i Halmstad byggs ut.","Mer kapacitet på Västkustbanan mellan Kungsbacka och Göteborg."],
+"Västra Götaland":["Mer kapacitet på järnvägen mellan Göteborg och Alingsås.","Älvsborgs amfibieregemente i Göteborg fortsätter att växa.","Kinnekullebanan elektrifieras delvis."]
 };
 function regionInfo(n){
  const sp=[];
- if(LOCAL[n]) sp.push(LOCAL[n]);
  if(n==="Jämtland") sp.push("Östersund blir Sveriges politiska huvudstad. Riksdag och regering är på plats senast 2050, och staden byggs ut med bostäder, kommunikationer och lokaler först.");
+ if(LOCAL[n]) sp.push(...LOCAL[n]);
  if(NORR.includes(n)) sp.push("Norrland växer. Myndigheter och departement flyttar etappvis till Östersund och andra orter i norr.");
  if(n==="Stockholm") sp.push("Stockholm får andrum. När flytten av riksdag och regering har kommit igång byggs inga fler bostäder här, och trycket fördelas över hela landet.");
  else if(!NORR.includes(n)) sp.push("Fler myndigheter och utbildningar flyttar ut till mindre städer, så att hela landet används.");
@@ -528,13 +553,13 @@ const box=$("regionbox");
 document.querySelectorAll(".sverige .rg").forEach(el=>{
  const go=()=>{document.querySelectorAll(".sverige .rg.on").forEach(x=>x.classList.remove("on"));el.classList.add("on");
   const n=el.dataset.n,info=regionInfo(n);
-  box.innerHTML=`<h3>${esc(n)}</h3><p class="lbl">${CAPS[n]?"Residensstad: "+esc(CAPS[n])+". ":""}Det här betyder Henkelt för dig som bor här.</p>${STRENGTH[n]?`<p class="str"><span>Regionens styrka</span>${esc(STRENGTH[n])}${CULTURE[n]?`<em>Det kulturella fokuset är och ska förbli ${esc(CULTURE[n])}.</em>`:""}</p><p class="strnote">Staten förstärker styrkan med myndigheter, utbildningar, infrastruktur och forskning.</p>`:""}<ul>${info.sp.map(x=>`<li class="star">${esc(x)}</li>`).join("")}${info.common.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;};
+  box.innerHTML=`<h3>${esc(n)}</h3><p class="lbl">${CAPS[n]?"Residensstad: "+esc(CAPS[n])+". ":""}Det här betyder Henkelt för dig som bor här.</p>${STRENGTH[n]?`<p class="str"><span>Regionens styrka</span>${esc(STRENGTH[n])}${CULTURE[n]?`<em>Det kulturella fokuset är och ska förbli ${esc(CULTURE[n])}.</em>`:""}</p><p class="strnote">Staten förstärker styrkan med myndigheter, utbildningar, infrastruktur och forskning.</p>`:""}<ul>${info.sp.map(x=>`<li class="star">${esc(x)}</li>`).join("")}</ul><p class="allt"><a href="#program">Dessutom gäller allt vi gör för hela landet, som statlig skola, vårdgaranti på 30 dagar och regioner i stället för kommuner. Läs programmet →</a></p>`;};
  el.addEventListener("click",()=>{go();if(innerWidth<820)box.scrollIntoView({behavior:"smooth",block:"start"})});if(el.dataset.n==="Jämtland")setTimeout(go,0);el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});
 });
 // Personer
 const PERSONA=[
 ["Ung eller student",["Fler platser på ingenjörsutbildningar och ett traineeprogram för nyexaminerade.","Mindre städer utvecklas med utbildning och myndigheter, så att det finns bostäder och jobb i hela landet.","Läxorna blir läsläxa och glosor. Resten lär du dig i skolan.","Större rörlighet på arbetsmarknaden gör det lättare att komma in."]],
-["Förälder",["Obligatorisk språkförskola för barn som behöver den och mindre barngrupper i förskolan.","Högst 12 elever per lärare i de yngre årskurserna.","Alla lågstadiebarn som behöver det får rätt till fritids.","Fler föräldradagar som kan tas ut samtidigt: 120 i stället för 60.","Läxorna blir läsläxa och glosor."]],
+["Förälder",["Vi vill att det ska bli lättare att skaffa fler barn, med bostäder för barnfamiljer i hela landet.","Obligatorisk språkförskola för barn som behöver den och mindre barngrupper i förskolan.","Högst 12 elever per lärare i de yngre årskurserna.","Alla lågstadiebarn som behöver det får rätt till fritids.","Fler föräldradagar som kan tas ut samtidigt: 120 i stället för 60.","Läxorna blir läsläxa och glosor."]],
 ["Anställd",["35 timmars arbetsvecka genom lag.","Obligatorisk a-kassa som arbetsgivarna betalar.","Skattesänkningar för dig med låg eller medelhög inkomst.","Nolltolerans mot dödsolyckor i arbetslivet."]],
 ["Företagare",["Staten står för karensavdraget i företag med högst 20 anställda.","Snabbare tillstånd med fasta tidsgränser för myndigheterna.","Nolltolerans mot brott som drabbar företag och en cyberakut som är öppen dygnet runt.","Kulturella frizoner med friare regler för uteserveringar, torghandel och nöjesliv."]],
 ["Pensionär",["Äldreomsorgslyftet med fler undersköterskor och en värdighetsgaranti.","Ett jobbat-avdrag ger lägre skatt på arbetsrelaterad pension.","Ett nationellt vaccinprogram för äldre.","Förstärkt tandvårdsstöd för dig över 67 år."]],
