@@ -122,6 +122,9 @@ footer{padding:40px 0 60px;color:var(--muted);font-size:15px;border-top:1px soli
 .personabox{position:static;margin-top:8px}
 .regionbox h3,.personabox h3{margin:0 0 4px;font-size:26px;letter-spacing:-.02em}
 .regionbox .lbl{color:var(--muted);margin:0 0 14px}
+.regionbox .str{margin:0 0 4px;padding:10px 14px;border-radius:12px;background:color-mix(in srgb,var(--brand) 12%,var(--bg));font-weight:700;font-size:1.05rem}
+.regionbox .str span{display:block;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--brand)}
+.regionbox .strnote{color:var(--muted);font-size:.85rem;margin:0 0 14px}
 .regionbox ul,.personabox ul{margin:0;padding:0;list-style:none}
 .regionbox li,.personabox li{padding:10px 0 10px 30px;border-top:1px solid var(--line);position:relative}
 .regionbox li::before,.personabox li::before{content:"";position:absolute;left:4px;top:17px;width:12px;height:12px;border-radius:50%;background:var(--brand)}
@@ -456,6 +459,28 @@ render();
 const NORR=["Norrbotten","Västerbotten","Västernorrland","Jämtland","Gävleborg"];
 const COMMON=["Starka regioner ersätter kommunerna, med tjänstemän utspridda på regionens orter.","Statlig skola med samma kvalitet som i resten av landet.","Vårdgaranti på 30 dagar. Bryts den betalar regionen för vård hos en annan vårdgivare.","Gratis kollektivtrafik på landsbygden.","Vägarna prioriteras efter trafik, alternativa vägar och nationell säkerhet."];
 const CAPS={"Stockholm": "Stockholm", "Uppsala": "Uppsala", "Södermanland": "Nyköping", "Östergötland": "Linköping", "Jönköping": "Jönköping", "Kronoberg": "Växjö", "Kalmar": "Kalmar", "Gotland": "Visby", "Blekinge": "Karlskrona", "Skåne": "Malmö", "Halland": "Halmstad", "Västra Götaland": "Göteborg", "Värmland": "Karlstad", "Örebro": "Örebro", "Västmanland": "Västerås", "Dalarna": "Falun", "Gävleborg": "Gävle", "Västernorrland": "Härnösand", "Västerbotten": "Umeå", "Norrbotten": "Luleå", "Jämtland": "Östersund"};
+const STRENGTH={
+"Stockholm":"Sveriges finansiella centrum",
+"Uppsala":"Life science och forskning",
+"Södermanland":"Fossilfritt stål",
+"Östergötland":"Försvars- och flygindustri",
+"Jönköping":"Logistik och e-handel",
+"Kronoberg":"Trä, möbler och design",
+"Kalmar":"Kärnkraft och kunskap om slutförvar",
+"Gotland":"Försvaret i Östersjön och besöksnäring",
+"Blekinge":"Marin försvarsindustri",
+"Skåne":"Forskning i världsklass",
+"Halland":"Energi",
+"Västra Götaland":"Logistik och hamn",
+"Värmland":"Skog och papper",
+"Örebro":"Gods och transporter",
+"Västmanland":"Elektrifiering",
+"Dalarna":"Transporter och stål",
+"Gävleborg":"Stål och verktyg",
+"Västernorrland":"Skogsindustri och statlig service",
+"Jämtland":"Sveriges politiska centrum",
+"Västerbotten":"Metaller och återvinning",
+"Norrbotten":"Rymd och grönt stål"};
 const LOCAL={
 "Norrbotten":"Norrbotniabanan byggs hela vägen till Luleå, och dubbelspåret Luleå–Boden kommer tillbaka i planen.",
 "Västerbotten":"Norrbotniabanan mellan Umeå och Skellefteå ska vara klar 2032, som planerat.",
@@ -482,7 +507,7 @@ const box=$("regionbox");
 document.querySelectorAll(".sverige .rg").forEach(el=>{
  const go=()=>{document.querySelectorAll(".sverige .rg.on").forEach(x=>x.classList.remove("on"));el.classList.add("on");
   const n=el.dataset.n,info=regionInfo(n);
-  box.innerHTML=`<h3>${esc(n)}</h3><p class="lbl">${CAPS[n]?"Residensstad: "+esc(CAPS[n])+". ":""}Det här betyder Henkelt för dig som bor här.</p><ul>${info.sp.map(x=>`<li class="star">${esc(x)}</li>`).join("")}${info.common.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;};
+  box.innerHTML=`<h3>${esc(n)}</h3><p class="lbl">${CAPS[n]?"Residensstad: "+esc(CAPS[n])+". ":""}Det här betyder Henkelt för dig som bor här.</p>${STRENGTH[n]?`<p class="str"><span>Regionens styrka</span>${esc(STRENGTH[n])}</p><p class="strnote">Staten förstärker styrkan med myndigheter, utbildningar, infrastruktur och forskning.</p>`:""}<ul>${info.sp.map(x=>`<li class="star">${esc(x)}</li>`).join("")}${info.common.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;};
  el.addEventListener("click",()=>{go();if(innerWidth<820)box.scrollIntoView({behavior:"smooth",block:"start"})});if(el.dataset.n==="Jämtland")setTimeout(go,0);el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});
 });
 // Personer
