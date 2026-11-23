@@ -3,48 +3,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nonsens – helt utan syfte</title>
-<link rel="stylesheet" href="style.css">
+<title>Nu kom du helt enkelt fel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Monoton&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:#0b0221;color:#fff;overflow:hidden;font-family:"Press Start 2P",monospace}
+.sky{position:fixed;inset:0;background:linear-gradient(#0b0221 0%,#2b0b4a 45%,#ff2a6d 62%,#0b0221 62.2%)}
+.stars{position:fixed;inset:0 0 40% 0;background-image:radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 33% 8%,#fff,transparent),radial-gradient(1.5px 1.5px at 72% 22%,#fff,transparent),radial-gradient(1px 1px at 88% 10%,#fff,transparent),radial-gradient(1px 1px at 55% 30%,#fff,transparent),radial-gradient(1.5px 1.5px at 20% 40%,#fff,transparent),radial-gradient(1px 1px at 92% 38%,#fff,transparent);animation:blink 3s infinite alternate}
+@keyframes blink{to{opacity:.4}}
+.sun{position:fixed;left:50%;top:62%;width:min(60vw,420px);aspect-ratio:1;transform:translate(-50%,-72%);border-radius:50%;
+  background:linear-gradient(#ffe66d 0%,#ff9e3d 45%,#ff2a6d 80%);
+  -webkit-mask:linear-gradient(#000 55%,transparent 55%),repeating-linear-gradient(transparent 0 8px,#000 8px 22px);-webkit-mask-composite:source-over;
+  mask:linear-gradient(#000 55%,transparent 55%),repeating-linear-gradient(transparent 0 8px,#000 8px 22px);mask-composite:add;
+  box-shadow:0 0 80px #ff2a6d}
+.floor{position:fixed;left:0;right:0;top:62%;bottom:0;perspective:220px;perspective-origin:50% 0;overflow:hidden;background:#0b0221;z-index:1;border-top:2px solid #ff2a6d;box-shadow:0 -4px 30px #ff2a6d}
+.grid{position:absolute;left:-100%;right:-100%;top:0;height:300%;transform:rotateX(65deg);transform-origin:50% 0;
+  background-image:linear-gradient(#ff2a6d 2px,transparent 2px),linear-gradient(90deg,#05d9e8 2px,transparent 2px);
+  background-size:70px 70px;animation:drive 1s linear infinite}
+@keyframes drive{to{background-position:0 70px}}
+.floor::after{content:"";position:absolute;inset:0;background:linear-gradient(#0b0221 0%,transparent 35%)}
+main{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 16px 18vh}
+h1{font-family:Monoton,cursive;font-weight:400;font-size:clamp(38px,9vw,110px);line-height:1.05;
+  background:linear-gradient(#fff 0%,#9be7ff 45%,#1a1a6e 50%,#ff9ef5 55%,#fff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 6px #ff2a6d) drop-shadow(0 0 22px #ff2a6d);transform:skew(-6deg)}
+h1 .sub{display:block;font-size:.55em}
+p{margin-top:28px;background:rgba(11,2,33,.75);padding:12px 16px;border:2px solid #05d9e8;box-shadow:0 0 14px #05d9e8;font-size:clamp(10px,1.8vw,15px);color:#05d9e8;text-shadow:0 0 8px #05d9e8,0 0 20px #05d9e8;animation:flick 2.4s infinite}
+@keyframes flick{0%,19%,23%,60%,100%{opacity:1}20%,22%,61%{opacity:.2}}
+.cursor{display:inline-block;width:.8em;height:1em;background:#05d9e8;vertical-align:-2px;margin-left:4px;animation:cur 1s steps(1) infinite}
+@keyframes cur{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.grid,.stars,p,.cursor{animation:none}}
+</style>
 </head>
 <body>
-<div class="wrap">
-  <header class="top"><a class="home" href="./">🌀 Nonsens</a><span class="tag">En avdelning helt utan syfte</span></header>
-  <h1>Välkommen till ingenting.</h1>
-  <p class="lead">Här finns ingenting du behöver. Men det finns mycket av det.</p>
-
-  <div class="grid">
-    <a class="tile" href="knappen.html"><span class="em">🔴</span><b>Tryck inte</b><span class="d">En knapp. Du vet vad du ska göra.</span></a>
-    <a class="tile" href="oraklet.html"><span class="em">🔮</span><b>Oraklet</b><span class="d">Svarar på allt. Typ.</span></a>
-    <a class="tile" href="ankor.html"><span class="em">🦆</span><b>Hitta ankan</b><span class="d">En av dem är inte som de andra.</span></a>
-    <a class="tile" href="kon.html"><span class="em">🧍</span><b>Kön</b><span class="d">Ställ dig i kö. Till vad? Spelar ingen roll.</span></a>
-    <a class="tile" href="panel.html"><span class="em">🎛️</span><b>Kontrollpanelen</b><span class="d">Spakar som styr exakt ingenting.</span></a>
-    <a class="tile" href="intyg.html"><span class="em">📜</span><b>Intyg</b><span class="d">Officiellt bevis på genomförd ingenting.</span></a>
-  </div>
-
-  <h2 style="margin-top:40px">Prestationer <span class="muted small" id="achcount"></span></h2>
-  <div class="card" id="achlist"></div>
-
-  <footer class="foot">Ingenting här är på riktigt. Allt sparas bara i din egen webbläsare.</footer>
-</div>
-<script src="common.js"></script>
-<script>
-function renderAch(){
-  const got=(store().ach)||{}; const keys=Object.keys(ACH);
-  document.getElementById("achcount").textContent="("+keys.filter(k=>got[k]).length+" av "+keys.length+")";
-  const list=document.getElementById("achlist"); list.innerHTML="";
-  keys.forEach(k=>{
-    const a=ACH[k], d=document.createElement("div");
-    d.className="ach"+(got[k]?"":" locked");
-    d.innerHTML='<span class="i"></span><div><b></b><div class="small muted"></div></div>';
-    d.querySelector(".i").textContent=a.i;
-    d.querySelector("b").textContent=got[k]?a.n:"???";
-    d.querySelector(".small").textContent=got[k]?a.d:"Inte upplåst än.";
-    list.appendChild(d);
-  });
-}
-document.addEventListener("ach", renderAch);
-renderAch();
-setTimeout(()=>unlock("forsta"), 600);
-</script>
+<div class="sky"></div><div class="stars"></div><div class="sun"></div>
+<div class="floor"><div class="grid"></div></div>
+<main>
+  <h1>Nu kom du<span class="sub">helt enkelt fel</span></h1>
+  <p>INSERT COIN TO CONTINUE<span class="cursor"></span></p>
+</main>
 </body>
 </html>
