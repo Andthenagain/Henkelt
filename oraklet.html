@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oraklet – Nonsens</title>
+<link rel="stylesheet" href="style.css">
+<style>
+#ball{font-size:110px;display:inline-block;transition:transform .4s}
+#ball.think{animation:wob .5s infinite}
+@keyframes wob{50%{transform:rotate(12deg) scale(1.05)}}
+#svar{font-size:22px;font-weight:700;min-height:70px;margin:16px 0}
+form{display:flex;gap:8px;max-width:520px;margin:0 auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a class="home" href="./">🌀 Nonsens</a><span class="tag">Oraklet</span></header>
+  <div class="card center">
+    <div id="ball">🔮</div>
+    <div id="svar">Ställ en fråga. Vilken som helst.</div>
+    <form id="f"><input type="text" id="q" placeholder="Ska jag…" autocomplete="off"><button>Fråga</button></form>
+    <p class="muted small" style="margin-top:16px">Oraklet har svarat <span id="c">0</span> gånger. Det har aldrig haft fel.</p>
+  </div>
+</div>
+<script src="common.js"></script>
+<script>
+const think=["Konsulterar stjärnorna…","Ringer en vän…","Läser kaffesump…","Räknar på det…","Frågar en anka…"];
+const svar=["Det beror på.","Det beror helt och hållet på.","Ja, om det är tisdag.","Det beror på vad du menar med det.",
+"Absolut. Eller absolut inte.","Fråga igen efter lunch.","Svaret är 42, men frågan var fel.","Det beror på vädret.",
+"Kanske. Troligen. Möjligen.","Oraklet har ingen kommentar i nuläget.","Det beror på hur man ser det.","Mycket talar för det. Lika mycket talar emot.",
+"Ja. Nej. Vi återkommer.","Det beror på, men inte på det du tror.","Har du provat att stänga av och sätta på igen?"];
+let c=getVal("orakel",0); document.getElementById("c").textContent=c;
+document.getElementById("f").addEventListener("submit",e=>{
+  e.preventDefault(); const q=document.getElementById("q").value.trim(); const s=document.getElementById("svar"), b=document.getElementById("ball");
+  if(!q){ s.textContent="Oraklet svarar inte på tystnad. Eller gör det?"; return; }
+  b.classList.add("think"); s.textContent=think[Math.floor(Math.random()*think.length)];
+  setTimeout(()=>{ b.classList.remove("think"); s.textContent=svar[Math.floor(Math.random()*svar.length)];
+    c++; setVal("orakel",c); document.getElementById("c").textContent=c; unlock("orakel"); if(c>=10) unlock("orakel10"); }, 1400);
+});
+</script>
+</body>
+</html>

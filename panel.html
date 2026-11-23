@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kontrollpanelen – Nonsens</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.panel{background:#3a3f45;color:#e8e4d8;border-radius:16px;padding:22px;border:6px solid #23272b;box-shadow:inset 0 0 0 2px #555}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px;margin-bottom:22px}
+.ctl{background:#2c3035;border-radius:10px;padding:12px;text-align:center;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.ctl input[type=range]{width:100%;accent-color:var(--yellow)}
+.sw{width:54px;height:30px;border-radius:15px;background:#555;position:relative;cursor:pointer;margin:8px auto 0;border:none;padding:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#ddd;transition:left .15s}
+.sw.on{background:var(--green)}.sw.on::after{left:27px}
+.lamp{width:18px;height:18px;border-radius:50%;background:#511;display:inline-block;margin:6px 3px 0;box-shadow:inset 0 0 4px #000}
+.lamp.on{background:#ff4d3f;box-shadow:0 0 10px #ff4d3f}
+.gauge{height:14px;background:#1d2024;border-radius:7px;overflow:hidden;margin-top:8px}
+.gauge div{height:100%;background:linear-gradient(90deg,var(--green),var(--yellow),var(--red));transition:width .5s}
+#lcd{font-family:ui-monospace,Consolas,monospace;background:#9fb28a;color:#1f2a16;padding:12px 14px;border-radius:8px;min-height:48px;font-size:15px}
+.shake{animation:sh .08s 14}
+@keyframes sh{25%{transform:translate(4px,-3px)}75%{transform:translate(-4px,3px)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a class="home" href="./">🌀 Nonsens</a><span class="tag">Kontrollpanelen</span></header>
+  <p class="lead">Varje spak, knapp och reglage är noga kalibrerat för att inte styra någonting.</p>
+  <div class="panel" id="panel">
+    <div class="row" id="sliders"></div>
+    <div class="row" id="switches"></div>
+    <div class="row">
+      <div class="ctl">Flödesmätare<div class="gauge"><div id="g1" style="width:10%"></div></div></div>
+      <div class="ctl">Kaffenivå<div class="gauge"><div id="g2" style="width:40%"></div></div></div>
+      <div class="ctl">Varningslampor<div id="lamps"></div></div>
+    </div>
+    <div id="lcd">SYSTEM REDO. INGENTING ATT RAPPORTERA.</div>
+  </div>
+</div>
+<script src="common.js"></script>
+<script>
+const sNames=["Turbulens","Gurkfaktor","Mjukhet","Byråkrati"], swNames=["Huvudström","Reservankan","Fläkt (låtsas)","Vet ej"];
+const lcdMsg=["GURKFAKTORN ÄR NU OPTIMAL.","BYRÅKRATI ÖKAR. BLANKETT 7B KRÄVS.","RESERVANKAN ÄR VAKEN.","ALLT ÄR NORMALT. MISSTÄNKT NORMALT.",
+"FLÄKTEN FINNS INTE MEN TACKAR ÄNDÅ.","VARNING: INGEN VARNING.","KALIBRERAR KALIBRERINGEN…","FEL 404: SYFTE HITTADES EJ."];
+const sl=document.getElementById("sliders"), sw=document.getElementById("switches"), lamps=document.getElementById("lamps"), lcd=document.getElementById("lcd");
+sNames.forEach(n=>{ const d=document.createElement("div"); d.className="ctl"; d.innerHTML=n+'<input type="range" min="0" max="100" value="'+Math.floor(Math.random()*40)+'">'; sl.appendChild(d); });
+swNames.forEach(n=>{ const d=document.createElement("div"); d.className="ctl"; d.textContent=n; const b=document.createElement("button"); b.className="sw"; b.setAttribute("aria-label",n);
+  b.addEventListener("click",()=>{ b.classList.toggle("on"); update(); }); d.appendChild(b); sw.appendChild(d); });
+for(let i=0;i<5;i++){ const l=document.createElement("span"); l.className="lamp"; lamps.appendChild(l); }
+sl.addEventListener("input",update);
+let fired=false;
+function update(){
+  const vals=[...sl.querySelectorAll("input")].map(i=>+i.value), ons=[...sw.querySelectorAll(".sw")].map(b=>b.classList.contains("on"));
+  const avg=vals.reduce((a,b)=>a+b,0)/vals.length;
+  document.getElementById("g1").style.width=Math.min(100,avg+Math.random()*15)+"%";
+  document.getElementById("g2").style.width=(100-avg*.6)+"%";
+  [...lamps.children].forEach((l,i)=>l.classList.toggle("on", Math.random()<avg/130));
+  lcd.textContent=lcdMsg[Math.floor(Math.random()*lcdMsg.length)];
+  if(!fired && ons.every(Boolean) && vals.every(v=>v>=95)){
+    fired=true; document.getElementById("panel").classList.add("shake");
+    lcd.textContent="!!! NÅGOT HÄNDE !!! … NEJ. FALSKT LARM. INGENTING HÄNDE.";
+    unlock("panel"); setTimeout(()=>{document.getElementById("panel").classList.remove("shake"); fired=false;},2000);
+  }
+}
+setInterval(()=>{ [...lamps.children].forEach(l=>{ if(Math.random()<.1) l.classList.toggle("on"); }); },700);
+</script>
+</body>
+</html>

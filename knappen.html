@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tryck inte – Nonsens</title>
+<link rel="stylesheet" href="style.css">
+<style>
+#big{width:220px;height:220px;border-radius:50%;border:8px solid #7a1c18;background:radial-gradient(circle at 35% 30%,#ff6b62,var(--red) 60%,#8d1f1a);color:#fff;font-size:26px;font-weight:800;box-shadow:0 12px 0 #6a1713,0 18px 30px rgba(0,0,0,.25);transition:transform .08s,box-shadow .08s;position:relative}
+#big:active{transform:translateY(8px);box-shadow:0 4px 0 #6a1713,0 8px 14px rgba(0,0,0,.25)}
+#big.strejk{filter:grayscale(1);cursor:not-allowed}
+#arena{position:relative;height:340px;display:flex;align-items:center;justify-content:center}
+#msg{font-size:20px;min-height:60px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a class="home" href="./">🌀 Nonsens</a><span class="tag">Tryck inte</span></header>
+  <div class="card center">
+    <div id="arena"><button id="big">TRYCK<br>INTE</button></div>
+    <div id="msg">Det är en knapp. Tryck inte på den.</div>
+    <p class="muted small">Du har tryckt <b id="n">0</b> gånger totalt.</p>
+  </div>
+</div>
+<script src="common.js"></script>
+<script>
+const msgs={1:"Nej. Du tryckte.",2:"Igen? Seriöst.",3:"Det står ju TRYCK INTE.",5:"Jag är besviken.",8:"Det här säger mycket om dig.",
+10:"Okej. Du vinner ingenting.",15:"Knappen har ringt sin mamma.",20:"Var det värt det?",25:"Vi har informerat dina grannar.",
+30:"Knappen överväger att byta jobb.",40:"Fyrtio. Fyr. Tio.",50:"Knappen börjar bli nervös.",60:"Den försöker fly nu.",
+75:"Knappen har anlitat en advokat.",90:"Snart. Snart händer det.",99:"Ett tryck kvar till… något.",100:"Grattis. Ingenting hände. Knappen går i strejk i 30 sekunder."};
+const big=document.getElementById("big"), msg=document.getElementById("msg"), nEl=document.getElementById("n");
+let n=getVal("knapp",0); nEl.textContent=n; let strejk=false;
+big.addEventListener("click",()=>{
+  if(strejk){ msg.textContent="Knappen strejkar. Respektera det."; return; }
+  n++; setVal("knapp",n); nEl.textContent=n;
+  const keys=Object.keys(msgs).map(Number).filter(k=>k<=n); const k=Math.max(...keys,0);
+  msg.textContent = msgs[n] || (k?msgs[k]:"") ;
+  if(n>100 && !msgs[n]) msg.textContent=["Fortfarande ingenting.","Du har gjort det här förut.","Knappen minns allt.","Klick.","Ja ja.","Mm."][n%6];
+  if(n>=10) unlock("knapp10");
+  if(n%100===0){ unlock("knapp100"); strejk=true; big.classList.add("strejk"); setTimeout(()=>{strejk=false;big.classList.remove("strejk");msg.textContent="Knappen är tillbaka. Motvilligt.";},30000); }
+  if(n>=60 && n%100<95 && Math.random()<.5){
+    const a=document.getElementById("arena").getBoundingClientRect();
+    big.style.left=(Math.random()*(a.width-240)-(a.width-220)/2)+"px"; big.style.top=(Math.random()*100-50)+"px";
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intyg – Nonsens</title>
+<link rel="stylesheet" href="style.css">
+<style>
+canvas{width:100%;max-width:800px;height:auto;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.15);display:block;margin:16px auto}
+.form{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end}
+@media(max-width:640px){.form{grid-template-columns:1fr}}
+label{font-size:13px;color:var(--muted)}
+select{font:inherit;padding:10px;border:2px solid var(--line);border-radius:10px;width:100%;background:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a class="home" href="./">🌀 Nonsens</a><span class="tag">Intyg</span></header>
+  <p class="lead">Fyll i ditt namn och välj vad du inte har gjort. Intyget är juridiskt ogiltigt i alla länder.</p>
+  <div class="card">
+    <div class="form">
+      <div><label>Namn</label><input type="text" id="namn" placeholder="För- och efternamn" maxlength="40"></div>
+      <div><label>Intyget avser</label><select id="typ">
+        <option>genomförd ingenting</option><option>godkänd väntan i kö</option><option>avancerad stirrning i tomma luften</option>
+        <option>certifierad ankskådning</option><option>slutförd utbildning i att inte trycka på knappar</option><option>grundkurs i att ha det bra</option>
+      </select></div>
+      <button id="dl">Ladda ner</button>
+    </div>
+    <canvas id="c" width="1600" height="1130"></canvas>
+  </div>
+</div>
+<script src="common.js"></script>
+<script>
+const c=document.getElementById("c"), x=c.getContext("2d");
+const nrSerie="NONS-"+String(Math.floor(Math.random()*900000)+100000);
+function draw(){
+  const W=c.width,H=c.height, namn=document.getElementById("namn").value.trim()||"Namn Namnsson", typ=document.getElementById("typ").value;
+  x.fillStyle="#fffaf0"; x.fillRect(0,0,W,H);
+  x.strokeStyle="#8a6d2f"; x.lineWidth=14; x.strokeRect(40,40,W-80,H-80); x.lineWidth=3; x.strokeRect(70,70,W-140,H-140);
+  x.textAlign="center"; x.fillStyle="#3b2f17";
+  x.font="bold 46px Georgia,serif"; x.fillText("NATIONELLA VERKET FÖR INGENTING",W/2,190);
+  x.font="italic 30px Georgia,serif"; x.fillStyle="#6f5a32"; x.fillText("Avdelningen för onödiga intyg",W/2,240);
+  x.fillStyle="#3b2f17"; x.font="bold 110px Georgia,serif"; x.fillText("INTYG",W/2,400);
+  x.font="34px Georgia,serif"; x.fillText("Härmed intygas att",W/2,490);
+  x.font="bold italic 78px Georgia,serif"; x.fillStyle="#1d3c6e"; x.fillText(namn,W/2,600);
+  x.strokeStyle="#c9b88f"; x.lineWidth=2; x.beginPath(); x.moveTo(380,625); x.lineTo(W-380,625); x.stroke();
+  x.fillStyle="#3b2f17"; x.font="34px Georgia,serif"; x.fillText("har med godkänt resultat uppvisat",W/2,700);
+  x.font="bold 46px Georgia,serif"; x.fillText(typ,W/2,770);
+  const d=new Date().toLocaleDateString("sv-SE");
+  x.font="26px Georgia,serif"; x.textAlign="left"; x.fillText("Datum: "+d,150,950); x.fillText("Diarienummer: "+nrSerie,150,990);
+  x.textAlign="center"; x.font="italic 44px 'Brush Script MT',cursive"; x.fillText("A. Nonsensson",W-420,940);
+  x.beginPath(); x.moveTo(W-580,960); x.lineTo(W-260,960); x.stroke(); x.font="22px Georgia,serif"; x.fillText("Generaldirektör för ingenting",W-420,995);
+  // stämpel
+  x.save(); x.translate(W/2,915); x.rotate(-0.18); x.strokeStyle="rgba(200,50,43,.8)"; x.fillStyle="rgba(200,50,43,.8)"; x.lineWidth=7;
+  x.beginPath(); x.arc(0,0,95,0,Math.PI*2); x.stroke(); x.lineWidth=3; x.beginPath(); x.arc(0,0,80,0,Math.PI*2); x.stroke();
+  x.font="bold 30px Arial"; x.fillText("GODKÄND",0,8); x.font="bold 15px Arial"; x.fillText("UTAN ANLEDNING",0,40); x.fillText("★ ★ ★",0,-32); x.restore();
+}
+document.getElementById("namn").addEventListener("input",draw); document.getElementById("typ").addEventListener("change",draw);
+document.getElementById("dl").addEventListener("click",()=>{ draw(); const a=document.createElement("a"); a.download="intyg.png"; a.href=c.toDataURL("image/png"); a.click(); unlock("intyg"); });
+draw();
+</script>
+</body>
+</html>
